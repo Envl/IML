@@ -1,7 +1,7 @@
 # GMI
 Ressources and materials for the course Gestural Mobile Interaction at University Paris-Saclay
 
-Coordinators: [Baptiste Caramiaux](http://baptistecaramiaux.com) (CNRS, LRI UPSud) and [Eric Lecolinet](http://perso.telecom-paristech.fr/~elc) (Télécom ParisTech LTCI) 
+Coordinators: [Baptiste Caramiaux](http://baptistecaramiaux.com) (CNRS, LRI UPSud)
 
 ## Description
 
@@ -10,15 +10,8 @@ Gestural interaction is used as input modality in interfaces through a wide vari
 ## Program
 All classes are on Friday afternoon (13h30-16h30) at University Paris-Saclay
 
-- Session 1: Introduction / Mobile Interaction
-- Session 2: Gestural Interaction
-- Session 3: Motor Control and Learning 
-- Session 4: Machine Learning for Gestural Interaction - Part 1
-- Session 5: Machine Learning for Gestural Interaction - Part 2 
-- Session 6: Project Session (1/2)
-- Session 7: Project Session (2/2) 
-- Session 8: Project Presentation
+TBA
 
 ## Acknowledgements
 
-Gilles Bailly, Michel-Ange Amorim, and Isabelle Siegler for sharing their course material.
+Eric Lecolinet, Gilles Bailly, Michel-Ange Amorim, and Isabelle Siegler for sharing their course material.
