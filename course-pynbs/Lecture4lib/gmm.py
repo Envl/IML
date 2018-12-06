@@ -1,6 +1,6 @@
 
 import numpy as np
-from sklearn.mixture import GMM
+from sklearn.mixture import GaussianMixture
 
 
 class GMMC(object):
@@ -10,8 +10,8 @@ class GMMC(object):
 
     def fit(self, X_train, y_train):
         n_classes = len(np.unique(y_train))
-        self.clf = GMM(n_components=n_classes, covariance_type=self.covar_type, init_params='wc', n_iter=20)
-        self.clf.means_ = np.array([X_train[y_train == i].mean(axis=0) for i in range(n_classes)])
+        self.clf = GaussianMixture(n_components=n_classes, covariance_type=self.covar_type, init_params='kmeans', means_init=np.array([X_train[y_train == i].mean(axis=0) for i in range(n_classes)]))
+        # self.clf.means_ = np.array([X_train[y_train == i].mean(axis=0) for i in range(n_classes)])
         self.clf.fit(X_train)
 
     def predict(self, X_test):
