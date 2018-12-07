@@ -5,6 +5,7 @@ import pickle
 import scipy.signal
 import matplotlib.pylab as plt
 from scipy.interpolate import interp1d
+import json
 
 
 def get_iris_data(classes=[0, 1, 2]):
@@ -76,6 +77,44 @@ def load_one_dollar_ds(gesture=None, path='Lecture4lib/onedol_ds.pkl', resample=
                 labels_.append(labels[i])
         return data_, labels_
 
+def load_3d_gesture_data(resample=True):
+    data = json.load(open('alphabet_variability_raw_data.json'))
+    dataset_ = []
+    labels_ = []
+    for ci, c in enumerate(sorted(data.keys())):
+        plt.subplot(1, len(data.keys()), ci + 1)
+        for g in sorted(data[c].keys()):
+            dat = []
+            for d in data[c][g]:
+                v = []
+                for k in d['data'].keys():
+                    v.append(d['data'][k])
+                dat.append(v)
+            dat = np.array(dat)
+            if (len(dat) > 10):
+                dataset_.append(dat)
+                labels_.append(ci + 1)
+    if resample == True:
+        data_ = []
+        for g in dataset_:
+            n_length = 50
+            f = []
+            for k in range(g.shape[1]):
+                f.append(interp1d(np.arange(0, len(g)), g[:, k]))
+                # f_x = interp1d(np.arange(0, len(g)), g[:, 0])
+                # f_y = interp1d(np.arange(0, len(g)), g[:, 1])
+            nx = np.linspace(0, len(g) - 1, num=n_length, endpoint=True)
+            g_ = np.zeros((n_length, g.shape[1]))
+            for k in range(g.shape[1]):
+                g_[:, k] = f[k](nx)
+                # g_[:, 1] = f_y(nx)
+            data_.append(g_)
+        data_ = np.array(data_)
+        labels = np.array(labels_)
+        return data_, labels
+    else:
+        return dataset_, labels_
+
 
 def mean_gesture(gesture, path='Lecture4lib/onedol_ds.pkl'):
     d, l = load_one_dollar_ds(gesture=gesture, path=path)
@@ -108,4 +147,8 @@ def std_gesture(gesture, path='Lecture4lib/onedol_ds.pkl'):
 
 
 if __name__ == '__main__':
-    mean_gesture(1, path='onedol_ds.pkl')
+    # mean_gesture(1, path='onedol_ds.pkl')
+    ds, lbls = load_3d_gesture_data(resample=True)
+
+
+
