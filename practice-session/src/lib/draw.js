@@ -8,40 +8,71 @@ let lineWidth = 3;
 let color = "orange";
 
 
-function drawGesture(canvas, res, e) {
+function startGestureMouse(canvas, e) {
   let ctx = canvas.getContext("2d");
-  if (res == 'down') {
-    // clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    prevMouseX = currMouseX;
-    prevMouseY = currMouseY;
-    currMouseX = e.clientX - canvas.offsetLeft;
-    currMouseY = e.clientY - canvas.offsetTop;
-    initDrawingPt = true;
-    if (initDrawingPt) {
-        ctx.beginPath();
-        ctx.fillStyle = color;
-        ctx.arc(currMouseX, currMouseY, 5, 0, Math.PI * 2, true);
-        ctx.fill();
-        ctx.closePath();
-        initDrawingPt = false;
-    }
-  }
-  if (res == 'move') {
-    prevMouseX = currMouseX;
-    prevMouseY = currMouseY;
-    currMouseX = e.clientX - canvas.offsetLeft;
-    currMouseY = e.clientY - canvas.offsetTop;
+  // clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  prevMouseX = currMouseX;
+  prevMouseY = currMouseY;
+  currMouseX = e.clientX - canvas.offsetLeft;
+  currMouseY = e.clientY - canvas.offsetTop;
+  
+  // initDrawingPt = true;
+  // if (initDrawingPt) {
     ctx.beginPath();
-    ctx.moveTo(prevMouseX, prevMouseY);
-    ctx.lineTo(currMouseX, currMouseY);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = lineWidth; 
-    ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.arc(currMouseX, currMouseY, 5, 0, Math.PI * 2, true);
+    ctx.fill();
     ctx.closePath();
-  }
+    initDrawingPt = false;
+  // }
 }
 
+function startGestureTouch(canvas, e) {
+  mousePos = getTouchPos(canvas, e);
+  var touch = e.touches[0];
+  var mouseEvent = new MouseEvent("mousedown", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+  });
+  canvas.dispatchEvent(mouseEvent);
+}
+
+// Get the position of a touch relative to the canvas
+function getTouchPos(canvasDom, touchEvent) {
+  var rect = canvasDom.getBoundingClientRect();
+  return {
+    x: touchEvent.touches[0].clientX - rect.left,
+    y: touchEvent.touches[0].clientY - rect.top
+  };
+}
+
+function drawGestureMouse(canvas, e) {
+  let ctx = canvas.getContext("2d");
+  prevMouseX = currMouseX;
+  prevMouseY = currMouseY;
+  currMouseX = e.clientX - canvas.offsetLeft;
+  currMouseY = e.clientY - canvas.offsetTop;
+  ctx.beginPath();
+  ctx.moveTo(prevMouseX, prevMouseY);
+  ctx.lineTo(currMouseX, currMouseY);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth; 
+  ctx.stroke();
+  ctx.closePath();
+  
+}
+
+
+function drawGestureTouch(canvas, e) {
+  var touch = e.touches[0];
+  var mouseEvent = new MouseEvent("mousemove", {
+    clientX: touch.clientX,
+    clientY: touch.clientY
+  });
+  //document.getElementById('dataset-div').innerHTML = touch.clientX.toString() + ' / ' + touch.clientY.toString();
+  canvas.dispatchEvent(mouseEvent);
+}
 
 function addGestureThumbnail(canvas, gesture_id) {
     // declare the canva where to draw a thumbnail
@@ -93,4 +124,4 @@ function addBoxToBody(width, height, name, boxtitle) {
 }
 
 
-export { addBoxToBody, drawGesture, addGestureThumbnail, getMouseXYinCanvas };
+export { addBoxToBody, drawGestureMouse, drawGestureTouch, startGestureMouse, startGestureTouch, addGestureThumbnail, getMouseXYinCanvas };
