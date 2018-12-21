@@ -5,6 +5,7 @@ const $drawing = document.querySelector('#drawCan');
 let letsdraw = false;
 
 
+
 // start when mouse of finger are down
 $drawing.addEventListener('mousedown', function(e) {
     // ...

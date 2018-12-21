@@ -16,8 +16,9 @@
   "dependencies": {
     "babel-runtime": "^6.9.2",
     "lfo-motion": "github:ircam-rnd/lfo-motion",
+    "libsvm-js": "^0.2.1",
     "mobile-detect": "^1.3.7",
-    "waves-lfo": "^1.1.3",
+    "waves-lfo": "^1.1.6",
     "waves-loaders": "github:wavesjs/waves-loaders"
   },
   "devDependencies": {
