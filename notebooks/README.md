@@ -27,3 +27,7 @@ Once miniconda is installed, you can install all the packages you need with cond
 
 `conda install python=3.7 pandas scikit-learn matplotlib numpy jupyter keras`
 
+## Test
+
+On Linux or Max, `cd` in this folder and run in the terminal:
+`jupyter notebook` 
