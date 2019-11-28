@@ -8,21 +8,39 @@ from scipy.interpolate import interp1d
 import json
 
 
-def reduce_dataset(data, labels, reduce_by=90):
-    classes = np.unique(labels)
-    data_ = []
-    labels_ = []
-    for ci, c in enumerate(classes):
-        idx = np.where(labels == c)[0]
-        if ci == 0:
-            data_ = np.array(data[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...])
-            labels_ = np.array(labels[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...])
-        else:
-            data_ = np.r_[data_, data[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...]]
-            labels_ = np.r_[labels_, labels[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...]]
-    # data_ = np.array(data_)
-    # labels_ = np.array(labels_)
-    return data_, labels_
+def reduce_dataset(data, labels, reduce_by=-1, num_obs=-1):
+    if reduce_by == -1 and num_obs==-1:
+        return data, labels
+    elif reduce_by != -1:
+        classes = np.unique(labels)
+        data_ = []
+        labels_ = []
+        for ci, c in enumerate(classes):
+            idx = np.where(labels == c)[0]
+            if ci == 0:
+                data_ = np.array(data[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...])
+                labels_ = np.array(labels[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...])
+            else:
+                data_ = np.r_[data_, data[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...]]
+                labels_ = np.r_[labels_, labels[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...]]
+        # data_ = np.array(data_)
+        # labels_ = np.array(labels_)
+        return data_, labels_
+    elif reduce_by ==-1 and num_obs != -1:
+        classes = np.unique(labels)
+        data_ = []
+        labels_ = []
+        for ci, c in enumerate(classes):
+            idx = np.where(labels == c)[0]
+            if ci == 0:
+                data_ = np.array(data[idx[:num_obs],...])
+                labels_ = np.array(labels[idx[:num_obs],...])
+            else:
+                data_ = np.r_[data_, data[idx[:num_obs],...]]
+                labels_ = np.r_[labels_, labels[idx[:num_obs],...]]
+        return data_, labels_
+
+
 
 
 def get_iris_data(classes=[0, 1, 2]):
