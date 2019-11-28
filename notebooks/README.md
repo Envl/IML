@@ -1,3 +1,21 @@
+# Notebooks
+
+Python notebooks used in the course Interactive Machine Learning of University Paris-Saclay. 
+
+Description:
+- Basics of ML Part-1
+    - Machine Learning
+    - Machine learning in python
+    - Toy datset: The Iris Dataset
+    - Training a Classifier on the Iris Dataset
+    - Testing a Classifier on the Iris Dataset
+- Basics of ML Part-2
+    - Realworld dataset
+    - Performance metrics in classification
+    - Model selection
+    - Another supervised learning task: Regression
+
+
 ## Installation
 
 Choose the option that applies to you.
