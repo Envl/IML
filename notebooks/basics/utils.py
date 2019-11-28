@@ -8,6 +8,23 @@ from scipy.interpolate import interp1d
 import json
 
 
+def reduce_dataset(data, labels, reduce_by=90):
+    classes = np.unique(labels)
+    data_ = []
+    labels_ = []
+    for ci, c in enumerate(classes):
+        idx = np.where(labels == c)[0]
+        if ci == 0:
+            data_ = np.array(data[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...])
+            labels_ = np.array(labels[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...])
+        else:
+            data_ = np.r_[data_, data[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...]]
+            labels_ = np.r_[labels_, labels[idx[:int(((100 - reduce_by) / 100.0) * len(idx))],...]]
+    # data_ = np.array(data_)
+    # labels_ = np.array(labels_)
+    return data_, labels_
+
+
 def get_iris_data(classes=[0, 1, 2]):
     iris = datasets.load_iris()
     features = np.array(iris.data)
@@ -148,7 +165,16 @@ def std_gesture(gesture, path='Lecture4lib/onedol_ds.pkl'):
 
 if __name__ == '__main__':
     # mean_gesture(1, path='onedol_ds.pkl')
-    ds, lbls = load_3d_gesture_data(resample=True)
+    # ds, lbls = load_3d_gesture_data(resample=True)
 
+    import ssl
+    ssl._create_default_https_context = ssl._create_unverified_context
+    from sklearn import datasets
+    dataset = datasets.fetch_covtype()
+    features = dataset.data
+    labels = dataset.target
+    print(features.shape)
+    [features, labels] = reduce_dataset(features, labels, reduce_by=90)
+    print(features.shape)
 
 
